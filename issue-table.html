@@ -67,14 +67,15 @@ firebase.auth().signOut().then(function() {
 });
 }
         }
-        
-     function deleteIssue(r){
+       
+        function deleteIssue(r){
             var x=confirm("If you want to delete the issue, confirm");
             if(x==true){
             var i = r.parentNode.parentNode.rowIndex;
             document.getElementById("mytable").deleteRow(i);
             }
         }
+
         
         function showOpen(){
             var open = document.getElementById("chop");
@@ -121,6 +122,7 @@ firebase.auth().signOut().then(function() {
         <form action="./edit.html" style="float: left">
             <button type="submit">Edit issue</button>
         </form>
+        
         <input type="checkbox" id="chop" onchange="showOpen();"/>Open issues only<br>
         
         <div>
@@ -133,53 +135,51 @@ firebase.auth().signOut().then(function() {
             <td class="b">&nbsp;</td>
            </tr>
            
-           <tr class="open" >
-                <td id="1">1</td>
+           <tr id = "1" class="open" >
+                <td>1</td>
                     <td><a href="./new-issue.html">Not supported tag &lt;bdi&gt;</a></td>
                     <td>Warning</td>
                     <td>The tag is not suppported by all browsers</td>
-                    <td class="b">
-                    <form action="confirmation.html">       
-                        
-                        <input type="submit" value="&times;" style="text-align: center">
-                    </form>              
-                     </td>                 
+                    <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>            
+                               
                  </tr>
      
-                <tr class="close">
-                <td id="2">2</td>
+                <tr id="2" class="close">
+                <td>2</td>
                     <td><a href="./new-issue-2.html">Not valid encoding</a></td>
                     <td>Error</td>
                     <td>The character encoding was not declared when validating simple html file</td>
-                    <td class="b">&nbsp;</td>
+                    <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
                 </tr>
                  
-                <tr class="close">
-                <td id="3">3</td>
+                <tr id="3" class="close">
+                <td >3</td>
                     <td><a href="./new-issue-3.html">Can't load webP in browsers</a></td>
                     <td>Error</td>
                     <td>Uploading a webP image but browser does not support the image.</td>
-                    <td class="b">&nbsp;</td>
+                    <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
                 </tr>
              
-                 <tr class="open">
-                <td id="4">4</td>
+                 <tr id="4" class="open">
+                <td >4</td>
                      <td><a href="./new-issue-4.html">Media mobile doesn't support</a></td>
                     <td>Error</td>
                     <td>Validation error when uses a different style for mobile</td>
-                    <td class="b">&nbsp;</td>
+                    <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
                 </tr>
                
-                 <tr class="close">
-                <td id="5">5</td>
+                 <tr id="5" class="close">
+                <td >5</td>
                      <td><a href="./new-issue-5.html">Border element obsolate</a></td>
                     <td>Error</td>
                     <td>Validator finds it is obsolate when directly set border in &lt;table&gt;</td>
-                    <td class="b">&nbsp;</td>
+                    <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
                 </tr>
                 
              </table>
              </div>
+
+           
                  
              <p id="bottom"><a  href="#top">go to top</a></p>
          <footer>
