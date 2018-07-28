@@ -45,6 +45,22 @@
     </head>
     <body>
         <h2>Add New Issue</h2>
-        
+        <form action="issue-table.html">
+            <label>Issue Name:</label> <br>
+            <textarea>Issue Name</textarea> <br>
+            <label>Issue Type:</label> <br>
+            <select>
+                <option value="feature">Feature</option>
+                <option value="moderate">Moderate</option>
+                <option value="warning">Warning</option>
+                <option value="error">Error</option>
+                <option value="severe">Severe</option>
+            </select> <br>
+            <label>Description:</label> <br>
+            <textarea>Description</textarea> <br>
+            <label> Upload File:</label>
+            <input type="file"> <br>
+            <button onclick="post()" type="submit">Submit</button>
+        </form>
     </body>
 </html>

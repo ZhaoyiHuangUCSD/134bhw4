@@ -39,36 +39,35 @@
         }
     </style>
     
-     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDylU22y4KBSC7NtdPcurxMu-1uJid67i0",
-    authDomain: "bhw4-af7bc.firebaseapp.com",
-    databaseURL: "https://bhw4-af7bc.firebaseio.com",
-    projectId: "bhw4-af7bc",
-    storageBucket: "",
-    messagingSenderId: "435052500774"
-  };
-  firebase.initializeApp(config);
-</script>   
-    
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDylU22y4KBSC7NtdPcurxMu-1uJid67i0",
+            authDomain: "bhw4-af7bc.firebaseapp.com",
+            databaseURL: "https://bhw4-af7bc.firebaseio.com",
+            projectId: "bhw4-af7bc",
+            storageBucket: "",
+            messagingSenderId: "435052500774"
+        };
+        firebase.initializeApp(config);    
+    </script>
     <script>
         
-       function logout(){
-
-var user = firebase.auth().currentUser;
-if(user){
-window.location="./index.html";
-firebase.auth().signOut().then(function() {
-    
-}).catch(function(error) {
-  
-});
-}
+        function logout(){
+            var user = firebase.auth().currentUser;
+            if(user){
+            window.location="./index.html";
+            firebase.auth().signOut().then(function() {
+                
+            }).catch(function(error) {
+            
+            });
+            }
         }
         
-     function deleteIssue(r){
+        function deleteIssue(r){
             var x=confirm("If you want to delete the issue, confirm");
             if(x==true){
             var i = r.parentNode.parentNode.rowIndex;
@@ -90,14 +89,14 @@ firebase.auth().signOut().then(function() {
         
             }
         
-          function tooglepart(on){
-              var lst=document.getElementsByClassName("close");
+        function tooglepart(on){
+            var lst=document.getElementsByClassName("close");
             for (var i=0;i<lst.length;++i){
                 lst[i].style.display=on?'none':'';    
             }  
           }
     </script>
-
+    <script src="./src/add.js"></script>
     
     </head>
     <body>
@@ -107,17 +106,10 @@ firebase.auth().signOut().then(function() {
         <h1 id="top"><b>Issue List</b></h1>
             
         <hr>
-
-        
-        
         
         <button onclick="logout()">Log out</button>
-        <form action="./add.html" style="float: left">
-            <button type="submit">Add issue</button>
-        </form>
-        <form action="./edit.html" style="float: left">
-            <button type="submit">Edit issue</button>
-        </form>
+        <button onclick="addRow()" style="float: left;">Add issue</button>
+        <button style="float: left;">Edit issue</button>
         <input type="checkbox" id="chop" onchange="showOpen();"/>Open issues only<br>
         
         <div>
@@ -136,7 +128,7 @@ firebase.auth().signOut().then(function() {
                     <td>Warning</td>
                     <td>The tag is not suppported by all browsers</td>
                     <td class="b">
-                    <form action="confirmation.html">       
+                    <form action="./confirmation.html">       
                         
                         <input type="submit" value="&times;" style="text-align: center">
                     </form>              
