@@ -82,8 +82,13 @@
         console.log(error);
         // [END_EXCLUDE]
       });
-     window.alert("sign up successful!"); 
-     
+      
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    window.alert("sign up successful!, will redirect you to the issue list page!");
+    window.location="./issue-table.html";
+  }
+});
  }
     </script>
     
@@ -91,7 +96,7 @@
 </head>
     <body>
         <main>
-        
+            <form action="">
             <div class="top">
             <img src="./img/paperpen.gif" width="500" height="200" alt="signup pic">
                 <h3>Sign up by filling in the details below</h3>
@@ -109,7 +114,7 @@
             <noscript>Your browser doesn't support Javascript. Please enable for optimal function.</noscript>
             <button type="button" onclick="location.href='index.html'" class="cancelbtn">Cancel</button>
             </div>
-            
+            </form>
         </main>
     </body>
 </html>
