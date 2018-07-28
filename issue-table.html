@@ -1,0 +1,196 @@
+<!--Tag used: html, head, link, meta, title, style, script, body, h1, hr, nav, br, button,b, a, table, td, tr, p, footer, address-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./src/printstyle.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="./src/mobile.css" type="text/css" media="only screen and (max-width: 800px)"/>
+     <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <title>Issue Table</title>
+    <style>
+        body{
+            font-family: 'PT Serif', serif;
+        }
+        table{
+            width:100%;
+            font-family: sans-serif;
+        }
+        tb,th,td{
+            border:1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        #bottom{
+            text-align: right;
+        }
+        .close{
+            background-color: lightgrey;
+            font-style: italic;
+        }
+        
+        .b{
+            border: none !important;
+            background-color: white;
+        }
+        input[type="submit"]{
+            background-color: orangered;
+            font-size: 20px;
+        }
+    </style>
+    
+     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDylU22y4KBSC7NtdPcurxMu-1uJid67i0",
+    authDomain: "bhw4-af7bc.firebaseapp.com",
+    databaseURL: "https://bhw4-af7bc.firebaseio.com",
+    projectId: "bhw4-af7bc",
+    storageBucket: "",
+    messagingSenderId: "435052500774"
+  };
+  firebase.initializeApp(config);
+</script>   
+    
+    <script>
+        
+       function logout(){
+
+var user = firebase.auth().currentUser;
+if(user){
+window.location="./index.html";
+firebase.auth().signOut().then(function() {
+    
+}).catch(function(error) {
+  
+});
+}
+        }
+        
+     function deleteIssue(r){
+            var x=confirm("If you want to delete the issue, confirm");
+            if(x==true){
+            var i = r.parentNode.parentNode.rowIndex;
+            document.getElementById("mytable").deleteRow(i);
+            }
+        }
+        
+        function showOpen(){
+            var open = document.getElementById("chop");
+            
+            if(open.checked){
+            
+                tooglepart(true);
+            }else{
+                
+               tooglepart(false);
+            }
+            
+        
+            }
+        
+          function tooglepart(on){
+              var lst=document.getElementsByClassName("close");
+            for (var i=0;i<lst.length;++i){
+                lst[i].style.display=on?'none':'';
+              
+          }  
+          }
+        
+ 
+    </script>
+
+    
+    </head>
+    <body>
+        <noscript>
+            <p>Your browser doesn't support Javascript. Please enable for optimal view.</p>
+        </noscript>
+        <h1 id="top"><b>Issue List</b></h1>
+            
+        <hr>
+
+        
+        
+        
+        <button onclick="logout()">Log out</button>
+        <form action="./add.html" style="float: left">
+            <button type="submit">Add issue</button>
+        </form>
+        <form action="./edit.html" style="float: left">
+            <button type="submit">Edit issue</button>
+        </form>
+        <input type="checkbox" id="chop" onchange="showOpen();"/>Open issues only<br>
+        
+        <div>
+        <table id="mytable">
+        <tr>
+           <td>Issue Id</td>
+            <td>Issue Name</td>
+            <td>Issue Type</td>
+            <td>Issue Description</td>
+            <td class="b">&nbsp;</td>
+           </tr>
+           
+           <tr class="open" >
+                <td id="1">1</td>
+                    <td><a href="./new-issue.html">Not supported tag &lt;bdi&gt;</a></td>
+                    <td>Warning</td>
+                    <td>The tag is not suppported by all browsers</td>
+                    <td class="b">
+                    <form action="confirmation.html">       
+                        
+                        <input type="submit" value="&times;" style="text-align: center">
+                    </form>              
+                     </td>                 
+                 </tr>
+     
+                <tr class="close">
+                <td id="2">2</td>
+                    <td><a href="./new-issue-2.html">Not valid encoding</a></td>
+                    <td>Error</td>
+                    <td>The character encoding was not declared when validating simple html file</td>
+                    <td class="b">&nbsp;</td>
+                </tr>
+                 
+                <tr class="close">
+                <td id="3">3</td>
+                    <td><a href="./new-issue-3.html">Can't load webP in browsers</a></td>
+                    <td>Error</td>
+                    <td>Uploading a webP image but browser does not support the image.</td>
+                    <td class="b">&nbsp;</td>
+                </tr>
+             
+                 <tr class="open">
+                <td id="4">4</td>
+                     <td><a href="./new-issue-4.html">Media mobile doesn't support</a></td>
+                    <td>Error</td>
+                    <td>Validation error when uses a different style for mobile</td>
+                    <td class="b">&nbsp;</td>
+                </tr>
+               
+                 <tr class="close">
+                <td id="5">5</td>
+                     <td><a href="./new-issue-5.html">Border element obsolate</a></td>
+                    <td>Error</td>
+                    <td>Validator finds it is obsolate when directly set border in &lt;table&gt;</td>
+                    <td class="b">&nbsp;</td>
+                </tr>
+                
+             </table>
+             </div>
+                 
+             <p id="bottom"><a  href="#top">go to top</a></p>
+         <footer>
+             <hr>
+             Copyright: &copy; Group Neko
+             <address>
+             9600 Gilman Drive<br> 
+             La Jolla, CA 92093<br>
+             </address>
+             </footer>
+         </body>
+     
+     </html>
+     
