@@ -41,67 +41,7 @@
     
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
-    <script>
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDylU22y4KBSC7NtdPcurxMu-1uJid67i0",
-            authDomain: "bhw4-af7bc.firebaseapp.com",
-            databaseURL: "https://bhw4-af7bc.firebaseio.com",
-            projectId: "bhw4-af7bc",
-            storageBucket: "",
-            messagingSenderId: "435052500774"
-        };
-        firebase.initializeApp(config); 
-        function addRow () {
-            var table = document.getElementById('mytable');
-            var index = table.rows.length;
-            var newRow = table.insertRow(index);
-            var newCell1 = newRow.insertCell(0);
-            newCell1.id = 'newCell1';
-            var newCell2 = newRow.insertCell(1);
-            newCell2.id = 'newCell2';
-            var newCell3 = newRow.insertCell(2);
-            newCell3.id = 'newCell3';
-            var newCell4 = newRow.insertCell(3);
-            newCell4.id = 'newCell4';
-            var newText = document.createTextNode(index); 
-            newCell1.appendChild(newText);
-
-            var nameInput = document.createElement('input');
-            nameInput.type = 'file';
-            nameInput.name = 'Upload file';
-            nameInput.id = 'nameInput';
-            newCell2.appendChild(nameInput);
-
-            var typeInput = document.createElement('select');
-            typeInput.id = 'typeInput';
-            var option1 = document.createElement('option');
-            var option2 = document.createElement('option');
-            var option3 = document.createElement('option');
-            var option4 = document.createElement('option');
-            var option5 = document.createElement('option');
-            option1.text = 'Feature';
-            option2.text = 'Moderate';
-            option3.text = 'Warning';
-            option4.text = 'Error';
-            option5.text = 'Severe';
-            typeInput.add(option1);
-            typeInput.add(option2);
-            typeInput.add(option3);
-            typeInput.add(option4);
-            typeInput.add(option5);
-            newCell3.appendChild(typeInput);
-            var description = document.createElement('input');
-            description.id = 'description';
-            newCell4.appendChild(description);
-            var save = document.createElement('input');
-            save.className = 'save';
-            save.type = 'button';
-            save.value = 'Save';
-            save.onclick = post;
-            table.appendChild(save);
-        }
-    </script>
+    <script src="./src/add.js"></script>
     <script>
         function logout(){
             var user = firebase.auth().currentUser;
@@ -150,7 +90,9 @@
         <hr>
         
         <button onclick="logout()">Log out</button>
-        <button onclick="addRow()" style="float: left;">Add issue</button>
+        <form action="./add.html">
+            <button style="float: left;">Add issue</button>
+        </form>
         <button style="float: left;">Edit issue</button>
         <input type="checkbox" id="chop" onchange="showOpen();"/>Open issues only<br>
         

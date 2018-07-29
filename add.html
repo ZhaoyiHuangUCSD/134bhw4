@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" media="only screen and (max-width: 800px)" href="./src/mobile.css" type="text/css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+<title>Adding Page </title>
+    <style>
+        input[type="text"]{
+            border:1px solid grey;
+            width:200px;
+            height:100px;
+        }
+        body{
+            font-family: 'PT Serif', serif;
+        }
+        
+    </style>
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+    <script src="./src/add.js"></script>
+</head>
+<body>
+
+<h1>Add Issue</h1>
+    <form action="./issue-table.html" method="get" id="newIssue">
+    <b>Issue Title</b><br>
+        <textarea name="message" rows="10" cols="30" id="newName"></textarea><br>
+        <b>Issue Type</b><br>
+        <select name="issues" id="newType">
+            <option value="N/A">N/A</option>
+            <option value="Error">Error</option>
+            <option value="Warning">Warning</option>
+        </select><br>
+        <b>Issue Description</b><br>
+        <textarea name="message" rows="10" cols="30" id="newDescription"></textarea><br>
+        <b>Issue Attachment</b><br>
+        <input type="file" id="newFile"><br>
+        <p>&nbsp;</p>
+        <button type="submit" onclick="insertData()">Submit</button>
+        <button type="reset">Reset</button>
+    </form>
+</body>
+</html>
