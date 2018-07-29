@@ -51,10 +51,58 @@
             storageBucket: "",
             messagingSenderId: "435052500774"
         };
-        firebase.initializeApp(config);    
+        firebase.initializeApp(config); 
+        function addRow () {
+            var table = document.getElementById('mytable');
+            var index = table.rows.length;
+            var newRow = table.insertRow(index);
+            var newCell1 = newRow.insertCell(0);
+            newCell1.id = 'newCell1';
+            var newCell2 = newRow.insertCell(1);
+            newCell2.id = 'newCell2';
+            var newCell3 = newRow.insertCell(2);
+            newCell3.id = 'newCell3';
+            var newCell4 = newRow.insertCell(3);
+            newCell4.id = 'newCell4';
+            var newText = document.createTextNode(index); 
+            newCell1.appendChild(newText);
+
+            var nameInput = document.createElement('input');
+            nameInput.type = 'file';
+            nameInput.name = 'Upload file';
+            nameInput.id = 'nameInput';
+            newCell2.appendChild(nameInput);
+
+            var typeInput = document.createElement('select');
+            typeInput.id = 'typeInput';
+            var option1 = document.createElement('option');
+            var option2 = document.createElement('option');
+            var option3 = document.createElement('option');
+            var option4 = document.createElement('option');
+            var option5 = document.createElement('option');
+            option1.text = 'Feature';
+            option2.text = 'Moderate';
+            option3.text = 'Warning';
+            option4.text = 'Error';
+            option5.text = 'Severe';
+            typeInput.add(option1);
+            typeInput.add(option2);
+            typeInput.add(option3);
+            typeInput.add(option4);
+            typeInput.add(option5);
+            newCell3.appendChild(typeInput);
+            var description = document.createElement('input');
+            description.id = 'description';
+            newCell4.appendChild(description);
+            var save = document.createElement('input');
+            save.className = 'save';
+            save.type = 'button';
+            save.value = 'Save';
+            save.onclick = post;
+            table.appendChild(save);
+        }
     </script>
     <script>
-        
         function logout(){
             var user = firebase.auth().currentUser;
             if(user){
@@ -78,27 +126,20 @@
         
         function showOpen(){
             var open = document.getElementById("chop");
-            
             if(open.checked){
-            
                 tooglepart(true);
-            }else{
-                
+            }else{    
                tooglepart(false);
             }
-            
-        
-            }
+        }
         
         function tooglepart(on){
             var lst=document.getElementsByClassName("close");
             for (var i=0;i<lst.length;++i){
                 lst[i].style.display=on?'none':'';    
             }  
-          }
-    </script>
-    <script src="./src/add.js"></script>
-    
+        }
+    </script>    
     </head>
     <body>
         <noscript>
@@ -115,70 +156,67 @@
         
         <div>
         <table id="mytable">
-        <tr>
-           <td>Issue Id</td>
-            <td>Issue Name</td>
-            <td>Issue Type</td>
-            <td>Issue Description</td>
-            <td class="b">&nbsp;</td>
-           </tr>
-           
-           <tr id = "1" class="open" >
+            <tr>
+                <td>Issue Id</td>
+                <td>Issue Name</td>
+                <td>Issue Type</td>
+                <td>Issue Description</td>
+                <td class="b">&nbsp;</td>
+            </tr>
+            <tr id = "1" class="open" >
                 <td>1</td>
-                    <td><a href="./new-issue.html">Not supported tag &lt;bdi&gt;</a></td>
-                    <td>Warning</td>
-                    <td>The tag is not suppported by all browsers</td>
-                    <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>            
-                               
-                 </tr>
-     
-                <tr id="2" class="close">
+                <td><a href="./new-issue.html">Not supported tag &lt;bdi&gt;</a></td>
+                <td>Warning</td>
+                <td>The tag is not suppported by all browsers</td>
+                <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>            
+                            
+                </tr>
+    
+            <tr id="2" class="close">
                 <td>2</td>
-                    <td><a href="./new-issue-2.html">Not valid encoding</a></td>
-                    <td>Error</td>
-                    <td>The character encoding was not declared when validating simple html file</td>
-                    <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
-                </tr>
-                 
-                <tr id="3" class="close">
-                <td >3</td>
-                    <td><a href="./new-issue-3.html">Can't load webP in browsers</a></td>
-                    <td>Error</td>
-                    <td>Uploading a webP image but browser does not support the image.</td>
-                    <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
-                </tr>
-             
-                 <tr id="4" class="open">
-                <td >4</td>
-                     <td><a href="./new-issue-4.html">Media mobile doesn't support</a></td>
-                    <td>Error</td>
-                    <td>Validation error when uses a different style for mobile</td>
-                    <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
-                </tr>
-               
-                 <tr id="5" class="close">
-                <td >5</td>
-                     <td><a href="./new-issue-5.html">Border element obsolate</a></td>
-                    <td>Error</td>
-                    <td>Validator finds it is obsolate when directly set border in &lt;table&gt;</td>
-                    <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
-                </tr>
+                <td><a href="./new-issue-2.html">Not valid encoding</a></td>
+                <td>Error</td>
+                <td>The character encoding was not declared when validating simple html file</td>
+                <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
+            </tr>
                 
-             </table>
-             </div>
+            <tr id="3" class="close">
+                <td >3</td>
+                <td><a href="./new-issue-3.html">Can't load webP in browsers</a></td>
+                <td>Error</td>
+                <td>Uploading a webP image but browser does not support the image.</td>
+                <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
+            </tr>
+            
+            <tr id="4" class="open">
+                <td >4</td>
+                    <td><a href="./new-issue-4.html">Media mobile doesn't support</a></td>
+                <td>Error</td>
+                <td>Validation error when uses a different style for mobile</td>
+                <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
+            </tr>
+            
+            <tr id="5" class="close">
+                <td >5</td>
+                    <td><a href="./new-issue-5.html">Border element obsolate</a></td>
+                <td>Error</td>
+                <td>Validator finds it is obsolate when directly set border in &lt;table&gt;</td>
+                <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
+            </tr>
+            
+        </table>
+    </div>
 
            
                  
-             <p id="bottom"><a  href="#top">go to top</a></p>
-         <footer>
-             <hr>
-             Copyright: &copy; Group Neko
-             <address>
-             9600 Gilman Drive<br> 
-             La Jolla, CA 92093<br>
-             </address>
-             </footer>
-         </body>
-     
-     </html>
-     
+    <p id="bottom"><a  href="#top">go to top</a></p>
+    <footer>
+        <hr>
+        Copyright: &copy; Group Neko
+            <address>
+                9600 Gilman Drive<br> 
+                La Jolla, CA 92093<br>
+            </address>
+    </footer>
+    </body>
+</html>
