@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" media="only screen and (max-width: 800px)" href="./src/mobile.css" type="text/css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+<title>Adding Page </title>
+    <style>
+        input[type="text"]{
+            border:1px solid grey;
+            width:200px;
+            height:100px;
+        }
+        body{
+            font-family: 'PT Serif', serif;
+        }
+        
+    </style>
+    
+<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDylU22y4KBSC7NtdPcurxMu-1uJid67i0",
+    authDomain: "bhw4-af7bc.firebaseapp.com",
+    databaseURL: "https://bhw4-af7bc.firebaseio.com",
+    projectId: "bhw4-af7bc",
+    storageBucket: "bhw4-af7bc.appspot.com",
+    messagingSenderId: "435052500774"
+  };
+  firebase.initializeApp(config);
+</script>
+    
+    
+    <script>
+        
+  function writeUserData(issuename,issuetype, issuedescriptions) {
+    window.alert("bb");
+  firebase.database().ref("issues").set({
+    issuename:issuename,
+    issuetype: issuetype,
+    issuedescriptions:issuedescriptions
+  
+  });
+} 
+        
+        
+function inputThings(){
+    window.alert("aa");
+    var issuename=document.getElementById("issuename").value;
+    var issuetype=document.getElementById("issuetype").value;
+    var issuedescriptions=document.getElementById("issuedescription").value;
+    writeUserData(issuename,issuetype,issuedescriptions);
+}
+        
+        
+    </script>
+    
+    
+</head>
+<body>
+
+<h1>Add Issue</h1>
+    <form id="myform" method="post">
+    <b>Issue Title</b><br>
+        <textarea id="issuename" rows="10" cols="30"></textarea><br>
+        <b>Issue Type</b><br>
+        <select id="issuetype">
+            <option value="Error">Error</option>
+            <option value="Warning">Warning</option>
+        </select><br>
+        <b>Issue Description</b><br>
+        <textarea id="issuedescription" rows="10" cols="30"></textarea><br>
+        <b>Issue Priority</b><br>
+        <div class="slidecontainer"><input type="range" min="1" max="3" value="2" class="slider" id="issuepriority" ></div><br>
+            <b>Issue Attachment</b><br>
+            <input type="file" id="issuefile"><br>
+            <p>&nbsp;</p>
+            <button type="button" onclick="inputThings()">Submit</button>
+            <button type="reset">Reset</button>
+    </form>
+</body>
+</html>
