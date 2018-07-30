@@ -15,6 +15,8 @@
         table{
             width:100%;
             font-family: sans-serif;
+            
+        
         }
         tb,th,td{
             border:1px solid #dddddd;
@@ -39,157 +41,162 @@
         }
     </style>
     
-    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
-    <script src="./src/add.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDylU22y4KBSC7NtdPcurxMu-1uJid67i0",
+    authDomain: "bhw4-af7bc.firebaseapp.com",
+    databaseURL: "https://bhw4-af7bc.firebaseio.com",
+    projectId: "bhw4-af7bc",
+    storageBucket: "",
+    messagingSenderId: "435052500774"
+  };
+  firebase.initializeApp(config);
+</script>   
+    
     <script>
-        function logout(){
-            var user = firebase.auth().currentUser;
-            if(user){
-            window.location="./index.html";
-            firebase.auth().signOut().then(function() {
-                
-            }).catch(function(error) {
+        
+        function redirect(){
             
-            });
-            }
+    firebase.auth().onAuthStateChanged(function(user) {
+    if (!user) {
+        alert("Please log on");
+    
+    window.location = 'index.html';
+  }
+})
+           
         }
-       
-        function deleteIssue(r){
-            var x=confirm("If you want to delete the issue, confirm");
-            if(x==true){
-            var i = r.parentNode.parentNode.rowIndex;
-            document.getElementById("mytable").deleteRow(i);
-            }
-        }
+        
+       function logout(){
 
+var user = firebase.auth().currentUser;
+if(user){
+window.location="./index.html";
+firebase.auth().signOut().then(function() {
+    
+}).catch(function(error) {
+  
+});
+}
+        }
+        
+      
+
+        
+     function deleteIssue(){
+            var x=prompt("Enter the issue name you want to delete");
+            if(x){
+  
+   firebase.database().ref().child('issues/' + x).remove();
+   window.location.reload();
+            }
+        }
         
         function showOpen(){
             var open = document.getElementById("chop");
+            
             if(open.checked){
+            
                 tooglepart(true);
-            }else{    
+            }else{
+                
                tooglepart(false);
             }
-        }
+            
         
-        function tooglepart(on){
-            var lst=document.getElementsByClassName("close");
+            }
+        
+          function tooglepart(on){
+              var lst=document.getElementsByClassName("close");
             for (var i=0;i<lst.length;++i){
-                lst[i].style.display=on?'none':'';    
-            }  
-        }
-        function buildTable(){
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyDylU22y4KBSC7NtdPcurxMu-1uJid67i0",
-                authDomain: "bhw4-af7bc.firebaseapp.com",
-                databaseURL: "https://bhw4-af7bc.firebaseio.com",
-                projectId: "bhw4-af7bc",
-                storageBucket: "bhw4-af7bc.appspot.com",
-                messagingSenderId: "435052500774"
-            };
-            firebase.initializeApp(config);
-            var tableBody = document.getElementById('mytable').getElementsByTagName('tbody')[0];
-            var ref = firebase.database().ref("issues").orderByKey();
-            ref.once("value")
-            .then(function(snap){
-                snap.forEach(function(childNodes){
-                    var newRow = tableBody.insertRow(tableBody.rows.length);
-                    var idCell = newRow.insertCell(0);
-                    idCell.appendChild(document.createTextNode(tableBody.rows.length-1));
-                    
-                    var nameCell = newRow.insertCell(1);
-                    nameCell.appendChild(childNodes.key);
-                    
-                    var typeCell = newRow.insertCell(2);
-                    typeCell.appendChild(childNodes.value.issuetype);
+                lst[i].style.display=on?'none':'';
+              
+          }  
+          }
+        
 
-                    var descriptionCell = newRow.insertCell(3);
-                    descriptionCell.appendChild(childNodes.value.issuedescriptions);
-                });
-            });
-        }
-    </script>    
+        
+        
+            function buildTable(){
+            
+            var tbUsers = document.getElementById("mytable");
+            var databaseRed = firebase.database().ref("issues");
+            var rowIndex=1;
+            databaseRed.once('value', function(snapshot) {
+  snapshot.forEach(function(childSnapshot) {
+    var childKey = childSnapshot.key;
+    var childData = childSnapshot.val();
+   var row = tbUsers.insertRow(rowIndex);
+    var cellId = row.insertCell(0);
+   var cellName = row.insertCell(1);
+    var cellDes=row.insertCell(2);
+    
+      
+    let params= new URLSearchParams();
+    var aref = document.createElement('aref');
+    aref.appendChild(document.createTextNode(childKey));
+    aref.href=params.append("issuename",childKey);
+   cellId.appendChild(aref);
+   cellName.appendChild(document.createTextNode(childData.issuetype));
+    cellDes.appendChild(document.createTextNode(childData.issuedescriptions));
+      rowIndex=rowIndex+1;
+  }); 
+});
+            }
+ 
+    </script>
+
+    
     </head>
     <body onload="buildTable()">
+        
         <noscript>
             <p>Your browser doesn't support Javascript. Please enable for optimal view.</p>
         </noscript>
+        
         <h1 id="top"><b>Issue List</b></h1>
             
         <hr>
+
+        
+        <script>redirect();</script>
         
         <button onclick="logout()">Log out</button>
-        <form action="./add.html">
-            <button style="float: left;">Add issue</button>
+        <form action="./add.html" style="float: left">
+            <button type="submit">Add issue</button>
         </form>
-        <button style="float: left;">Edit issue</button>
+        <form action="./edit.html" style="float: left">
+            <button type="submit">Edit issue</button>
+        </form>
+        <button onclick="deleteIssue()" style="float: left">delete</button>
         <input type="checkbox" id="chop" onchange="showOpen();"/>Open issues only<br>
         
         <div>
         <table id="mytable">
-            <tr>
-                <td>Issue Id</td>
-                <td>Issue Name</td>
-                <td>Issue Type</td>
-                <td>Issue Description</td>
-                <td class="b">&nbsp;</td>
-            </tr>
-            <tr id = "1" class="open" >
-                <td>1</td>
-                <td><a href="./new-issue.html">Not supported tag &lt;bdi&gt;</a></td>
-                <td>Warning</td>
-                <td>The tag is not suppported by all browsers</td>
-                <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>            
-                            
-                </tr>
-    
-            <tr id="2" class="close">
-                <td>2</td>
-                <td><a href="./new-issue-2.html">Not valid encoding</a></td>
-                <td>Error</td>
-                <td>The character encoding was not declared when validating simple html file</td>
-                <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
-            </tr>
-                
-            <tr id="3" class="close">
-                <td >3</td>
-                <td><a href="./new-issue-3.html">Can't load webP in browsers</a></td>
-                <td>Error</td>
-                <td>Uploading a webP image but browser does not support the image.</td>
-                <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
-            </tr>
-            
-            <tr id="4" class="open">
-                <td >4</td>
-                    <td><a href="./new-issue-4.html">Media mobile doesn't support</a></td>
-                <td>Error</td>
-                <td>Validation error when uses a different style for mobile</td>
-                <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
-            </tr>
-            
-            <tr id="5" class="close">
-                <td >5</td>
-                    <td><a href="./new-issue-5.html">Border element obsolate</a></td>
-                <td>Error</td>
-                <td>Validator finds it is obsolate when directly set border in &lt;table&gt;</td>
-                <td class="b"><input type="button" value="x" onclick="deleteIssue(this)"></td>
-            </tr>
-            
-        </table>
-    </div>
-
+        
+        <tr>
+            <td>Issue Name</td>
+            <td>Issue Type</td>
+            <td>Issue Description</td>
+           </tr>
            
+ 
+                
+             </table>
+             </div>
                  
-    <p id="bottom"><a  href="#top">go to top</a></p>
-    <footer>
-        <hr>
-        Copyright: &copy; Group Neko
-            <address>
-                9600 Gilman Drive<br> 
-                La Jolla, CA 92093<br>
-            </address>
-    </footer>
-    </body>
-</html>
+             <p id="bottom"><a  href="#top">go to top</a></p>
+         <footer>
+             <hr>
+             Copyright: &copy; Group Neko
+             <address>
+             9600 Gilman Drive<br> 
+             La Jolla, CA 92093<br>
+             </address>
+             </footer>
+         </body>
+     
+     </html>
+     
