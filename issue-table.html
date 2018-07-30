@@ -132,15 +132,16 @@ firebase.auth().signOut().then(function() {
     var cellId = row.insertCell(0);
    var cellName = row.insertCell(1);
     var cellDes=row.insertCell(2);
-    
+    var cellStaus=row.insertCell(3);
       
-    let params= new URLSearchParams();
-    var aref = document.createElement('aref');
+   var param='issue.html'+'?issuename='+childKey;
+    var aref = document.createElement('a');
     aref.appendChild(document.createTextNode(childKey));
-    aref.href=params.append("issuename",childKey);
+    aref.href=param;
    cellId.appendChild(aref);
    cellName.appendChild(document.createTextNode(childData.issuetype));
     cellDes.appendChild(document.createTextNode(childData.issuedescriptions));
+    cellStaus.appendChild(document.createTextNode(childData.issuestatus))
       rowIndex=rowIndex+1;
   }); 
 });
@@ -171,7 +172,7 @@ firebase.auth().signOut().then(function() {
             <button type="submit">Edit issue</button>
         </form>
         <button onclick="deleteIssue()" style="float: left">delete</button>
-        <input type="checkbox" id="chop" onchange="showOpen();"/>Open issues only<br>
+        <input type="checkbox" id="chop"/>Open issues only<br>
         
         <div>
         <table id="mytable">
@@ -180,6 +181,7 @@ firebase.auth().signOut().then(function() {
             <td>Issue Name</td>
             <td>Issue Type</td>
             <td>Issue Description</td>
+            <td>Issue Status</td>
            </tr>
            
  
