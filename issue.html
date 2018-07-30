@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewpoint" content="width-device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" media="only screen and (max-width: 800px)" href="./src/mobile.css" type="text/css" />
+    
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDylU22y4KBSC7NtdPcurxMu-1uJid67i0",
+    authDomain: "bhw4-af7bc.firebaseapp.com",
+    databaseURL: "https://bhw4-af7bc.firebaseio.com",
+    projectId: "bhw4-af7bc",
+    storageBucket: "bhw4-af7bc.appspot.com",
+    messagingSenderId: "435052500774"
+  };
+  firebase.initializeApp(config);
+    
+function getParam(){
+    let params = (new URL(document.location)).searchParams;
+    let name = params.get("issuename");
+    return name;
+}
+   
+    
+var issueName=getParam(); 
+
+    function getType(){
+var tbUsers = document.getElementById("issuetype"); 
+ firebase.database().ref('issues').child(issueName).once('value').then( function(snap) {
+    var user=String(snap.val().issuetype);
+    tbUsers.append(document.createTextNode(user));
+    });
+    } 
+
+    function getDes(){
+var tlUsers = document.getElementById("issuedes"); 
+ firebase.database().ref('issues').child(issueName).once('value').then( function(snap) {
+    var user=String(snap.val().issuedescriptions);
+    tlUsers.append(document.createTextNode(user));
+    });
+    } 
+</script>
+    
+    </head>
+<body>
+    <h1> Issue Name: <script>document.write(getParam())</script></h1>
+    <h2 id="issuetype"> Issue Type:  <script>getType()</script></h2>
+    <h2> Issue Description:</h2>
+    <p id="issuedes"><script>getDes()</script></p>
+    
+    
+    <hr>
+    <footer>
+            <small><i>Issue found by Group Neko</i></small>
+        </footer>
+    </body>
+</html>
