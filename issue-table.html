@@ -79,9 +79,40 @@
                 lst[i].style.display=on?'none':'';    
             }  
         }
+        function buildTable(){
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyDylU22y4KBSC7NtdPcurxMu-1uJid67i0",
+                authDomain: "bhw4-af7bc.firebaseapp.com",
+                databaseURL: "https://bhw4-af7bc.firebaseio.com",
+                projectId: "bhw4-af7bc",
+                storageBucket: "bhw4-af7bc.appspot.com",
+                messagingSenderId: "435052500774"
+            };
+            firebase.initializeApp(config);
+            var tableBody = document.getElementById('mytable').getElementsByTagName('tbody')[0];
+            var ref = firebase.database().ref("issues").orderByKey();
+            ref.once("value")
+            .then(function(snap){
+                snap.forEach(function(childNodes){
+                    var newRow = tableBody.insertRow(tableBody.rows.length);
+                    var idCell = newRow.insertCell(0);
+                    idCell.appendChild(document.createTextNode(tableBody.rows.length-1));
+                    
+                    var nameCell = newRow.insertCell(1);
+                    nameCell.appendChild(childNodes.key);
+                    
+                    var typeCell = newRow.insertCell(2);
+                    typeCell.appendChild(childNodes.value.issuetype);
+
+                    var descriptionCell = newRow.insertCell(3);
+                    descriptionCell.appendChild(childNodes.value.issuedescriptions);
+                });
+            });
+        }
     </script>    
     </head>
-    <body>
+    <body onload="buildTable()">
         <noscript>
             <p>Your browser doesn't support Javascript. Please enable for optimal view.</p>
         </noscript>

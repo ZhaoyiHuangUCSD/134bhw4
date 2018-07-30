@@ -38,12 +38,11 @@
         
   function writeUserData(issuename,issuetype, issuedescriptions) {
     window.alert("bb");
-  firebase.database().ref("issues").set({
-    issuename:issuename,
-    issuetype: issuetype,
-    issuedescriptions:issuedescriptions
-  
-  });
+    firebase.database().ref("issues").set({
+        issuename:issuename,
+        issuetype: issuetype,
+        issuedescriptions:issuedescriptions
+    });
 } 
         
         
