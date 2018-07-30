@@ -27,7 +27,7 @@ function getParam(){
    
     
 var issueName=getParam(); 
-
+var storage = firebase.storage().ref();
     function getType(){
 var tbUsers = document.getElementById("issuetype"); 
  firebase.database().ref('issues').child(issueName).once('value').then( function(snap) {
@@ -43,6 +43,38 @@ var tlUsers = document.getElementById("issuedes");
     tlUsers.append(document.createTextNode(user));
     });
     } 
+    
+        function getPriority(){
+var tcUsers = document.getElementById("issuepriority"); 
+ firebase.database().ref('issues').child(issueName).once('value').then( function(snap) {
+    var user=String(snap.val().issuepriority);
+    tcUsers.append(document.createTextNode(user));
+    });
+    } 
+    
+           function getStatus(){
+var tdUsers = document.getElementById("issuestatus"); 
+ firebase.database().ref('issues').child(issueName).once('value').then( function(snap) {
+    var user=String(snap.val().issuestatus);
+    tdUsers.append(document.createTextNode(user));
+    });
+    } 
+     
+ 
+    function getImge(){
+      firebase.database().ref('issues').child(issueName).once('value').then( function(snap) {
+    var user=String(snap.val().issuefile);
+        storage.child(user).getDownloadURL().then(function(url) {
+
+
+  var test = url;
+//  add this line here:
+  document.getElementById("issuefile").src = test;
+
+});
+    });  
+    }
+    
 </script>
     
     </head>
@@ -52,7 +84,13 @@ var tlUsers = document.getElementById("issuedes");
     <h2> Issue Description:</h2>
     <p id="issuedes"><script>getDes()</script></p>
     
+    <script>getImge()</script>
+    <img style="width:50%" id="issuefile" src="" alt="(no file uploaded related to this issue)"/>
+    <br>
+    <b>Issue level   </b><p id="issuepriority"><script>getPriority()</script></p>
+    <p>(Note: 1=low, 2=mid, 3=high)</p>
     
+    <b>Issue status:   <span id="issuestatus"><script>getStatus()</script></span></b>
     <hr>
     <footer>
             <small><i>Issue found by Group Neko</i></small>

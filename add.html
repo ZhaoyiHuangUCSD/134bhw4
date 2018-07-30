@@ -37,19 +37,19 @@
     <script>
         
   function writeUserData(issuename,issuetype, issuedescriptions,issuepriority) {
-    window.alert("bb");
   firebase.database().ref("issues/"+issuename).set({
     //issuename:issuename,
     issuetype: issuetype,
     issuedescriptions:issuedescriptions,
     issuepriority:issuepriority,
     issuestatus:"open",
-    //issuefile:fileurl
+    issuefile:fileurl
   });
 } 
 
-//var fileurl="";        
+var fileurl="";        
 function previewFile(){
+  fileurl=document.getElementById('files').value.split(/(\\|\/)/g).pop();
   var storage = firebase.storage();
 
   var file = document.getElementById("files").files[0];
@@ -75,7 +75,6 @@ function previewFile(){
 
         
 function inputThings(){
-    window.alert("aa");
     var issuename=document.getElementById("issuename").value;
     var issuetype=document.getElementById("issuetype").value;
     var issuedescriptions=document.getElementById("issuedescription").value;
@@ -94,20 +93,20 @@ function inputThings(){
 <h1>Add Issue</h1>
     <form id="myform" method="post">
     <b>Issue Title</b><br>
-        <textarea id="issuename" rows="10" cols="30"></textarea><br>
+        <textarea id="issuename" rows="10" cols="30" required></textarea><br>
         <b>Issue Type</b><br>
         <select id="issuetype">
             <option value="Error">Error</option>
             <option value="Warning">Warning</option>
         </select><br>
         <b>Issue Description</b><br>
-        <textarea id="issuedescription" rows="10" cols="30"></textarea><br>
+        <textarea id="issuedescription" rows="10" cols="30" required></textarea><br>
         <b>Issue Priority</b><br>
         <div class="slidecontainer"><input type="range" min="1" max="3" value="2" class="slider" id="issuepriority" ></div><br>
             <b>Issue Attachment</b><br>
-            <input type="file" id="files" onchange="previewFile()" id="files" name="files[]" multiple /><br>
+            <input type="file" id="files" accept="image/*"  onchange="previewFile()" id="files" name="files[]" multiple /><br>
             <p>&nbsp;</p>
-            <button type="button" onclick="inputThings()">Submit</button>
+            <button type="button" onclick="inputThings();window.location='issue-table.html'">Submit</button>
             <button type="reset">Reset</button>
     </form>
 </body>

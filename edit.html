@@ -118,7 +118,7 @@ function inputThings1(){
 <body>
 
 <h1>Edit Issue</h1>
-    <form action="./table-after-flip.html" method="get">
+    <form method="post">
         <b>Issue Title</b><br>
          <textarea id="issuename" rows="10" cols="30"></textarea><br>
         <b>Change issue status</b><br>
@@ -135,7 +135,7 @@ function inputThings1(){
             <b>Update Issue Attachment</b><br>
             <input type="file" id="files" onchange="previewFile()" id="files" name="files[]" multiple /><br>
             <p>&nbsp;</p>
-            <button type="button" onclick="inputThings1()" >Submit</button>
+            <button type="button" onclick="inputThings1(); window.location='issue-table.html'" >Submit</button>
             <button type="reset">Reset</button>
     </form>
 </body>
