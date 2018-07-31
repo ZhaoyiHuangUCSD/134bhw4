@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--
     <link rel="stylesheet" media="only screen and (max-width: 800px)" href="./src/mobile.css" type="text/css" />
+-->
     <meta charset="utf-8">
     <meta name="viewport" content="width-device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
-<title>Editing Page </title>
+    
+
+    <title>Editing Page </title>
     <style>
         input[type="text"]{
             border:1px solid grey;
@@ -13,7 +16,7 @@
             height:100px;
         }
         body{
-            font-family: 'PT Serif', serif;
+            font-family: Georgia, serif;
         }
         
     </style>
@@ -35,32 +38,47 @@
     
     <script>
         
+function getParam() {
+    let params = (new URL(document.location)).searchParams;
+    let name = params.get("id");
+    return name;
+};       
+        
+  var iid=String(getParam());
+
+function getIname(){
+var taUsers = document.getElementById("top"); 
+ firebase.database().ref('issues').child(iid).once('value').then( function(snap) {
+    var user=String(snap.val().issuename);
+    taUsers.append(document.createTextNode(user));
+    });
+}        
   function writeUserData(issuename, issuedescriptions,issuepriority,issuestatus) {
    
       if(issuedescriptions!=""){
-        window.alert("bb");
-         firebase.database().ref("issues/"+issuename).set({
+    
+         firebase.database().ref("issues/"+iid).set({
            issuedescriptions:issuedescriptions
          });
       }
       if(issuepriority!=0){
-        window.alert("bb");
-         firebase.database().ref("issues/"+issuename).set({
+    
+         firebase.database().ref("issues/"+iid).set({
            issuepriority:issuepriority
          });
       }
-  firebase.database().ref("issues/"+issuename).set({
-    //issuename:issuename,
+  firebase.database().ref("issues/"+iid).set({
+    issuename:issuename,
     issuedescriptions:issuedescriptions,
-    issuestatus:issuestatus
-    //issuefile:fileurl
+    issuestatus:issuestatus,
+    issuefile:fileurl
   });
 } 
 
-//var fileurl="";        
+var fileurl="";        
 function previewFile(){
   var storage = firebase.storage();
-
+  fileurl=document.getElementById('files').value.split(/(\\|\/)/g).pop();
   var file = document.getElementById("files").files[0];
   
   var storageRef = firebase.storage().ref();
@@ -81,20 +99,34 @@ function inputThings1(){
     
     if(document.getElementById("issuedescription")!=null){
     
-    firebase.database().ref("issues/"+document.getElementById("issuename").value).update({
+    firebase.database().ref("issues/"+iid).update({
            issuedescriptions:document.getElementById("issuedescription").value
          });
     }
      if(document.getElementById("issuepriority")!=null){
     
-    firebase.database().ref("issues/"+document.getElementById("issuename").value).update({
+    firebase.database().ref("issues/"+iid).update({
            issuepriority:document.getElementById("issuepriority").value
          });
     }
     
-    firebase.database().ref("issues/"+document.getElementById("issuename").value).update({
+    firebase.database().ref("issues/"+iid).update({
            issuestatus:document.getElementById("issuestatus").value
          });
+        
+    if(document.getElementById("issuename")!=null){
+    
+    firebase.database().ref("issues/"+iid).update({
+           issuename:document.getElementById("issuename").value
+         });
+    }
+    
+    if(fileurl!=""){
+            firebase.database().ref("issues/"+iid).update({
+           issuefile:fileurl
+         });
+    }
+    
     
     //var issuetype=document.getElementById("issuetype").value;
     //var issuedescriptions=document.getElementById("issuedescription").value;
@@ -118,8 +150,11 @@ function inputThings1(){
 <body>
 
 <h1>Edit Issue</h1>
+    <h2 id="top">You are changing issue: &nbsp; <script>getIname()</script></h2>
+    <h6>Please provide change for the fields or we will assume nothing change</h6>
+    <br>
     <form method="post">
-        <b>Issue Title</b><br>
+        <b>Issue Name</b><br>
          <textarea id="issuename" rows="10" cols="30"></textarea><br>
         <b>Change issue status</b><br>
         <select id="issuestatus">

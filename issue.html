@@ -32,9 +32,20 @@ function getParam(){
     let name = params.get("issuename");
     return name;
 }
-   
+  
+
     
+//Note, issueName is not the real issue name    
 var issueName=getParam(); 
+    
+function getIname(){
+var taUsers = document.getElementById("issuename"); 
+ firebase.database().ref('issues').child(issueName).once('value').then( function(snap) {
+    var user=String(snap.val().issuename);
+    taUsers.append(document.createTextNode(user));
+    });
+}
+    
 var storage = firebase.storage().ref();
     function getType(){
 var tbUsers = document.getElementById("issuetype"); 
@@ -94,7 +105,7 @@ var tdUsers = document.getElementById("issuestatus");
         <hr>
     </div>
     
-    <h2> Issue Name: <script>document.write(getParam())</script></h2>
+    <h2 id="issuename"> Issue Name: <script>getIname()</script></h2>
     <h2 id="issuetype"> Issue Type:  <script>getType()</script></h2>
     <h2> Issue Description:</h2>
     <p id="issuedes"><script>getDes()</script></p>
@@ -106,6 +117,10 @@ var tdUsers = document.getElementById("issuestatus");
     <p>(Note: 1=low, 2=mid, 3=high)</p>
     
     <b>Issue status:   <span id="issuestatus"><script>getStatus()</script></span></b>
+    <br>
+    <a id="edit" href=''>Edit this issue</a> 
+    <script>document.getElementById("edit").href="edit.html"+'?id='+getParam()</script>
+    <button style="float:right" onclick="window.location='issue-table.html'">Back to issue list</button>
     <hr>
     <footer>
             <small><i>Issue found by Group Neko</i></small>

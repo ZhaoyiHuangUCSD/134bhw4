@@ -133,10 +133,10 @@ firebase.auth().signOut().then(function() {
    var cellName = row.insertCell(1);
     var cellDes=row.insertCell(2);
     var cellStaus=row.insertCell(3);
-      
+   var iName=childData.issuename;   
    var param='issue.html'+'?issuename='+childKey;
     var aref = document.createElement('a');
-    aref.appendChild(document.createTextNode(childKey));
+    aref.appendChild(document.createTextNode(iName));
     aref.href=param;
    cellId.appendChild(aref);
    cellName.appendChild(document.createTextNode(childData.issuetype));
@@ -164,15 +164,8 @@ firebase.auth().signOut().then(function() {
         
         <script>redirect();</script>
         
-        <button onclick="logout()">Log out</button>
-        <form action="./add.html" style="float: left">
-            <button type="submit">Add issue</button>
-        </form>
-        <form action="./edit.html" style="float: left">
-            <button type="submit">Edit issue</button>
-        </form>
-        <button onclick="deleteIssue()" style="float: left">delete</button>
-        <input type="checkbox" id="chop"/>Open issues only<br>
+        <button onclick="logout()" style="float: right">Log out</button>
+       
         
         <div>
         <table id="mytable">
@@ -188,7 +181,10 @@ firebase.auth().signOut().then(function() {
                 
              </table>
              </div>
-                 
+             
+            <button type="submit" onclick="window.location='./add.html'" style="float:left">Add issue</button>
+        
+        <button onclick="deleteIssue()" style="float: left">delete issue</button>   
              <p id="bottom"><a  href="#top">go to top</a></p>
          <footer>
              <hr>
