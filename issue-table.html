@@ -29,6 +29,7 @@
             background-color: lightgrey;
             font-style: italic;
         }
+
         
         .b{
             border: none !important;
@@ -115,8 +116,14 @@ firebase.auth().signOut().then(function() {
           }  
           }
         
+        function editIssue(childKey){
+            var temp='';
+            temp="edit.html"+'?id='+String(childKey);
+            window.location=temp;
+        }
 
       
+    
         
             function buildTable(){
             
@@ -136,13 +143,21 @@ firebase.auth().signOut().then(function() {
     var cellDes=row.insertCell(2);
     var cellStaus=row.insertCell(3);
     var cellDel = row.insertCell(4);
+      var cellEdi=row.insertCell(5);
       
       //create delete button
       var del=document.createElement('input');
       del.setAttribute("type", "button");
       del.setAttribute("value","delete");  
       del.onclick = function(){deleteIssue(String(childKey))};
-
+      
+      //create edit button
+        var edi=document.createElement('input');
+      edi.setAttribute("value", "edit");
+      edi.setAttribute("type","button");  
+      edi.onclick = function(){editIssue(String(childKey))};
+      //edi.href="edit.html"+'?id='+String(childKey);
+      //edi.appendChild(document.createTextNode("edit"));
       
 //Create links      
    var iName=childData.issuename;   
@@ -150,13 +165,12 @@ firebase.auth().signOut().then(function() {
     var aref = document.createElement('a');
     aref.appendChild(document.createTextNode(iName));
     aref.href=param;
-   cellId.appendChild(aref);
-      
+   cellId.appendChild(aref);    
    cellName.appendChild(document.createTextNode(childData.issuetype));
     cellDes.appendChild(document.createTextNode(childData.issuedescriptions));
     cellStaus.appendChild(document.createTextNode(childData.issuestatus));
     cellDel.appendChild(del);
-    
+    cellEdi.appendChild(edi);
       rowIndex=rowIndex+1;
   }); 
 });
@@ -192,6 +206,7 @@ firebase.auth().signOut().then(function() {
             <td>Issue Description</td>
             <td>Issue Status</td>
             <td>&nbsp;</td>
+            <td>&nbsp;</td>
            </tr>
            
  
@@ -200,8 +215,7 @@ firebase.auth().signOut().then(function() {
              </div>
              
             <button type="submit" onclick="window.location='./add.html'" style="float:left">Add issue</button>
-        
-        <button onclick="deleteIssue()" style="float: left">delete issue</button>   
+           
              <p id="bottom"><a  href="#top">go to top</a></p>
          <footer>
              <hr>
