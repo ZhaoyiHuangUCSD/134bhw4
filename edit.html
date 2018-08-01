@@ -53,27 +53,7 @@ var taUsers = document.getElementById("top");
     taUsers.append(document.createTextNode(user));
     });
 }        
-  function writeUserData(issuename, issuedescriptions,issuepriority,issuestatus) {
-   
-      if(issuedescriptions!=""){
-    
-         firebase.database().ref("issues/"+iid).set({
-           issuedescriptions:issuedescriptions
-         });
-      }
-      if(issuepriority!=0){
-    
-         firebase.database().ref("issues/"+iid).set({
-           issuepriority:issuepriority
-         });
-      }
-  firebase.database().ref("issues/"+iid).set({
-    issuename:issuename,
-    issuedescriptions:issuedescriptions,
-    issuestatus:issuestatus,
-    issuefile:fileurl
-  });
-} 
+
 
 var fileurl="";        
 function previewFile(){
@@ -109,11 +89,12 @@ function inputThings1(){
            issuepriority:document.getElementById("issuepriority").value
          });
     }
-    
+     
+    if(document.getElementById("issuename").value!=0){
     firebase.database().ref("issues/"+iid).update({
            issuestatus:document.getElementById("issuestatus").value
          });
-        
+     }
  
     
     if(document.getElementById("issuename").value!=""){
@@ -128,12 +109,7 @@ function inputThings1(){
            issuefile:fileurl
          });
     }
-    
-    
-    //var issuetype=document.getElementById("issuetype").value;
-    //var issuedescriptions=document.getElementById("issuedescription").value;
-    //var issuepriority=document.getElementById("issuepriority").value;
-    //var issuestatus=document.getElementById("issuestatus").value;
+
     
     
 }
@@ -160,6 +136,7 @@ function inputThings1(){
          <textarea id="issuename" rows="10" cols="30"></textarea><br>
         <b>Change issue status</b><br>
         <select id="issuestatus">
+            <option value=0>N/A</option>
             <option value="open">open</option>
             <option value="close">close</option>
             

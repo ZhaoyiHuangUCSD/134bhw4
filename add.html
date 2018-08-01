@@ -37,24 +37,10 @@
     
     <script>
         
-    function httpPost(){
-    var xhr=new XMLHttpRequest();
-    xhr.open("POST",'http://localhost:3000/issues',true);
-    var type = document.getElementById('issuetype');
-    var typename = type.options[type.selectedIndex].value;
-    var status = document.getElementById('issuestatus');
-    var statusvalue = status.options[status.selectedIndex].value;
-    var data = {
-        "id": "",
-        "title": document.getElementById('issuename').value,
-        "type": typename,
-        "status": statusvalue,
-        "description": document.getElementById('issuedescription').value
-    }
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(data));
-}  
+const ONFIREBASE=0;
+const ONJSON=1;        
         
+       
         
         
   function writeUserData(issuename,issuetype, issuedescriptions,issuepriority) {
@@ -89,14 +75,31 @@ function previewFile(){
         
      
 
-        
-function inputThings(){
+/*building abstract storage function to add*/        
+function inputThings(val){
+    
     var issuename=document.getElementById("issuename").value;
     var issuetype=document.getElementById("issuetype").value;
     var issuedescriptions=document.getElementById("issuedescription").value;
     var issuepriority=document.getElementById("issuepriority").value;
+    if(val==ONFIREBASE){
     
     writeUserData(issuename,issuetype,issuedescriptions,issuepriority);
+    }
+    else if(val==ONJSON){
+    var xhr=new XMLHttpRequest();
+    xhr.open("POST",'http://localhost:3000/issues',true);
+    var data = {
+        "id": "",
+        "title": issuename,
+        "type": issuetype,
+        "status": 'Open',
+        "description": issuedescriptions
+    }
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(data));
+    }
+    
 }
         
 
@@ -122,8 +125,8 @@ function inputThings(){
             <b>Issue Attachment</b><br>
             <input type="file" id="files" accept="image/*"  onchange="previewFile()" id="files" name="files[]" multiple /><br>
             <p>&nbsp;</p>
-            <button type="button" onclick="inputThings();window.location='issue-table.html'">Submit to firebase</button>
-            <button type="button" onclick="httpPost();window.location='table_STEP3.html'">Submit to local storage</button>
+            <button type="button" onclick="inputThings(0);window.location='issue-table.html'">Submit to firebase</button>
+            <button type="button" onclick="inputThings(1);window.location='table_STEP3.html'">Submit to local storage</button>
             <button type="reset">Reset</button>
     </form>
 </body>
