@@ -27,7 +27,7 @@ function httpPut(){
 var url = 'http://localhost:3000/issues/' + document.getElementById('issueid').value;
 
 var xhr=new XMLHttpRequest();
-xhr.open("PUT",url,true);
+xhr.open("PATCH",url,true);
 
 var type = document.getElementById('issuetype');
 var typename = type.options[type.selectedIndex].value;
@@ -35,6 +35,33 @@ var typename = type.options[type.selectedIndex].value;
 var status = document.getElementById('issuestatus');
 var statusvalue = status.options[status.selectedIndex].value;
 
+if(document.getElementById('issuename').value == ""&&
+document.getElementById('issuedescription').value != ""){
+    var data = {
+        "id": "",
+        "type": typename,
+        "status": statusvalue,
+        "description": document.getElementById('issuedescription').value
+    }
+}
+else if(document.getElementById('issuedescription').value == "" &&
+document.getElementById('issuename').value != ""){
+    var data = {
+        "id": "",
+        "title": document.getElementById('issuename').value,
+        "type": typename,
+        "status": statusvalue
+    }
+}
+else if(document.getElementById('issuedescription').value == "" &&
+document.getElementById('issuename').value == ""){
+    var data = {
+        "id": "",
+        "type": typename,
+        "status": statusvalue
+    }
+}
+else{
     var data = {
         "id": "",
         "title": document.getElementById('issuename').value,
@@ -42,6 +69,7 @@ var statusvalue = status.options[status.selectedIndex].value;
         "status": statusvalue,
         "description": document.getElementById('issuedescription').value
     }
+}
 
 
 xhr.setRequestHeader('Content-Type', 'application/json');
