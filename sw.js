@@ -49,8 +49,4 @@ workbox.precaching.precacheAndRoute([
 //workbox.core.setLogLevel(workbox.core.LOG_LEVELS.debug);
 console.log("GG");
 
-workbox.routing.registerRoute(
-    /.*\.html/,
-    workbox.strategies.networkFirst(),
-    'GET'
-);
+
