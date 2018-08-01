@@ -44,6 +44,7 @@
     <script>  
         function deleteIssue(r){
             var x=confirm("If you want to delete the issue, confirm");
+            if(x){
 
             //Delete issues in database
             var url = 'http://localhost:3000/issues/' + r;
@@ -58,12 +59,11 @@
             }
             xhr.send();
 
-          
+        }
         }
 
 
     </script>
-    <script src="./src/add.js"></script>
     
     </head>
     <body>
@@ -80,7 +80,7 @@
         <!--
         <button onclick="logout()" style="float: left;">Log out</button>
         -->
-        <form action="add.html">
+        <form action="add_STEP3.html">
             <button type="submit" style="float:left;">Add issue</button>
         </form>
         
@@ -130,9 +130,6 @@
           }  
     }
 
-    function redirect(url){
-        window.open(url);
-    }
 
     // renderIssues - render the passed issues using template literals as opposed to template tags to show possibilities
     // approach deeply buries in the markup though!
@@ -152,7 +149,7 @@
                       </tr>` 
         + (issues.map(issue => `<tr class="${issue.status}" data-id="${issue.id}" data-issue='`+JSON.stringify(issue)+`'>
           <td>${issue.id}</td>
-          <td onclick=redirect("issue_STEP3.html?issueid=${issue.id}") style="color: blue;")><u>${issue.title}</u></td>
+          <td onclick="window.location='issue_STEP3.html?issueid=${issue.id}'") style="color: blue;")><u>${issue.title}</u></td>
           <td>${issue.type}</td>
           <td>${issue.description}</td>
           <td>${issue.status}</td>
