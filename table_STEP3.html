@@ -73,16 +73,18 @@
         <h1 id="top"><b>Issue List</b></h1>
             
         <hr>
-        
+        <br>
+
+        <input type="checkbox" id="chop" onchange="showOpen();"/>Open issues only<br>
+        <div id="IssueList"></div>
         <button onclick="logout()" style="float: left;">Log out</button>
         <form action="add.html">
             <button type="submit" style="float:left;">Add issue</button>
         </form>
-        <button style="float: left;" onclick="window.location='edit.html';">Edit issue</button>
-        <input type="checkbox" id="chop" onchange="showOpen();"/>Open issues only<br>
+        
         
 
-        <div id="IssueList"></div>
+        
     
     
     <script>
@@ -144,6 +146,7 @@
                         <th>Description</th>
                         <th>Status</th>
                         <th>&nbsp;</th>
+                        <th>&nbsp;</th>
                       </tr>` 
         + (issues.map(issue => `<tr class="${issue.status}" data-id="${issue.id}" data-issue='`+JSON.stringify(issue)+`'>
           <td>${issue.id}</td>
@@ -153,6 +156,7 @@
           <td>${issue.status}</td>
          
           <td><button onclick="deleteIssue(${issue.id})">Delete</button>
+          <td><button onclick="editIssue()">Edit</button>
         </tr>`
        )).join('');
      
@@ -160,7 +164,9 @@
      }
 
 
-
+     function editIssue(){
+         window.location="edit_STEP3.html";
+     }
     
     </script>       
                 

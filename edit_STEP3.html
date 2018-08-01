@@ -23,11 +23,18 @@
 <!--Script for json-server -->
 
 <script>
+
+ function getParam(){
+                
+        let params = (new URL(document.location)).searchParams;
+        let id = params.get("issueid");
+        return id;
+    }   
 function httpPut(){
 var url = 'http://localhost:3000/issues/' + document.getElementById('issueid').value;
 
 var xhr=new XMLHttpRequest();
-xhr.open("PATCH",url,true);
+xhr.open("PUT",url,true);
 
 var type = document.getElementById('issuetype');
 var typename = type.options[type.selectedIndex].value;

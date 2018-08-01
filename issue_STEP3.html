@@ -29,6 +29,7 @@
     <div id="issuedes"></div>
     <h2>Issue status:</h2>
     <div id="issuestatus"></div><br>
+    
 
     <script>
     window.addEventListener('DOMContentLoaded', function () {
@@ -44,11 +45,9 @@
 
      // getIssues - simple fetch from the end point getting current issues state
      function getIssues() {
-
-       // change to fetch API if you are so inclined
-       var issueId=getParam(); 
+        var issueId=getParam(); 
        
-       url = 'http://localhost:3000/issues/' + issueId;
+       var url = 'http://localhost:3000/issues/' + issueId;
        var xhr=new XMLHttpRequest();
         xhr.open("GET",url,false);
         xhr.send();
