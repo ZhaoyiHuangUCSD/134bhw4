@@ -97,13 +97,13 @@ function previewFile(){
         
 function inputThings1(){
     
-    if(document.getElementById("issuedescription")!=null){
+    if(document.getElementById("issuedescription").value!=""){
     
     firebase.database().ref("issues/"+iid).update({
            issuedescriptions:document.getElementById("issuedescription").value
          });
     }
-     if(document.getElementById("issuepriority")!=null){
+     if(document.getElementById("issuepriority").value!=0){
     
     firebase.database().ref("issues/"+iid).update({
            issuepriority:document.getElementById("issuepriority").value
@@ -114,7 +114,9 @@ function inputThings1(){
            issuestatus:document.getElementById("issuestatus").value
          });
         
-    if(document.getElementById("issuename")!=null){
+ 
+    
+    if(document.getElementById("issuename").value!=""){
     
     firebase.database().ref("issues/"+iid).update({
            issuename:document.getElementById("issuename").value
@@ -158,7 +160,7 @@ function inputThings1(){
          <textarea id="issuename" rows="10" cols="30"></textarea><br>
         <b>Change issue status</b><br>
         <select id="issuestatus">
-            <option value="open">re-open</option>
+            <option value="open">open</option>
             <option value="close">close</option>
             
         </select><br>
