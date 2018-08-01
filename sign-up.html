@@ -96,18 +96,16 @@ firebase.auth().onAuthStateChanged(function(user) {
 </head>
     <body>
         <main>
-            <form action="">
+            <form>
             <div class="top">
             <img src="./img/paperpen.gif" width="500" height="200" alt="signup pic">
                 <h3>Sign up by filling in the details below</h3>
             </div>
             <div class="mainfield">
                 <label><b>Email</b></label><br>
-                <input id="email"type="email" required><br>
+                <input id="email" type="email" required><br>
                 <label><b>Password</b></label><br>
                 <input id="password" type="password" required><br>
-                <label><b>Repeat password</b></label><br>
-                <input type="password" required>
             </div>
             <div class="down">
             <button type="button" class="signupbtn" onclick="handleSignUp();">Signup</button>
