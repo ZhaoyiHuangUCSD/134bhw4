@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width-device-width, initial-scale=1.0">
@@ -34,7 +34,19 @@ function getParam(){
     return name;
 }
   
+       function logout(){
 
+var user = firebase.auth().currentUser;
+if(user){
+window.location="./index.html";
+firebase.auth().signOut().then(function() {
+    
+}).catch(function(error) {
+  
+});
+}
+        }
+        
     
 //Note, issueName is not the real issue name    
 var issueName=getParam(); 
@@ -103,6 +115,8 @@ var tdUsers = document.getElementById("issuestatus");
 <body>
     <div>
     <h1>Issue Detail:</h1>
+        
+        <br>
         <hr>
     </div>
     
@@ -112,7 +126,7 @@ var tdUsers = document.getElementById("issuestatus");
     <p id="issuedes"><script>getDes()</script></p>
     
     <script>getImge()</script>
-    <img style="width:50%" id="issuefile" src="" alt="(no file uploaded related to this issue)"/>
+    <img style="width:50%" id="issuefile" src="blank" alt="(no file uploaded related to this issue)"/>
     <br>
     <b>Issue level   </b><p id="issuepriority"><script>getPriority()</script></p>
     <p>(Note: 1=low, 2=mid, 3=high)</p>
@@ -122,8 +136,11 @@ var tdUsers = document.getElementById("issuestatus");
     <a id="edit" href=''>Edit this issue</a> 
     <script>document.getElementById("edit").href="edit.html"+'?id='+getParam()</script>
     <button style="float:right" onclick="window.location='issue-table.html'">Back to issue list</button>
+    
+    
     <hr>
     <footer>
+        <button onclick="logout()" style="float: right">Log out</button>
             <small><i>Issue found by Group Neko</i></small>
         </footer>
     </body>
