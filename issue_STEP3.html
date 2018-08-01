@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <title>Issue page</title>
+    <style>
+        body{
+            background-color: slategrey;
+            font-family: Georgia, serif;
+        }
+    </style>
+
+    
+    </head>
+<body>
+    
+    
+    <div>
+    <h1>Issue Detail:</h1>
+        <hr>
+    </div>
+    <h2> Issue Name:</h2>
+    <div id="issuename"></div>
+    <h2> Issue Type:</h2>  
+    <div id="issuetype"></div>
+    <h2> Issue Description:</h2>
+    <p id="issuedes"></p>
+    <div id="issuedes"></div>
+    <h2>Issue status:</h2>
+    <div id="issuestatus"></div><br>
+    
+
+    <script>
+    window.addEventListener('DOMContentLoaded', function () {
+         getIssues();
+     });
+
+      function getParam(){
+                
+            let params = (new URL(document.location)).searchParams;
+            let id = params.get("issueid");
+            return id;
+        }
+
+     // getIssues - simple fetch from the end point getting current issues state
+     function getIssues() {
+        var issueId=getParam(); 
+       
+       var url = 'http://localhost:3000/issues/' + issueId;
+       var xhr=new XMLHttpRequest();
+        xhr.open("GET",url,false);
+        xhr.send();
+
+    if (xhr) {
+      var text = JSON.parse(xhr.responseText) ;
+      document.getElementById("issuename").innerText = text.title;
+      document.getElementById("issuetype").innerText = text.type;
+      document.getElementById("issuedes").innerText = text.description;
+      document.getElementById("issuestatus").innerText = text.status;
+      
+   }
+      
+     }
+            
+                 
+                    
+    </script>
+
+
+    
+   
+    <hr>
+    <footer>
+            <small><i>Issue found by Group Neko</i></small>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,187 @@
+<!--Tag used: html, head, link, meta, title, style, script, body, h1, hr, nav, br, button,b, a, table, td, tr, p, footer, address-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./src/printstyle.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="./src/mobile.css" type="text/css" media="only screen and (max-width: 800px)"/>
+     <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <title>Issue Table</title>
+    <style>
+        body{
+            font-family: 'PT Serif', serif;
+        }
+        table{
+            width:100%;
+            font-family: sans-serif;
+        }
+        tb,th,td{
+            border:1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        #bottom{
+            text-align: right;
+        }
+        .close{
+            background-color: lightgrey;
+            font-style: italic;
+        }
+        
+        .b{
+            border: none !important;
+            background-color: white;
+        }
+        input[type="submit"]{
+            background-color: orangered;
+            font-size: 20px;
+        }
+    </style>
+
+
+    
+    <script>  
+        function deleteIssue(r){
+            var x=confirm("If you want to delete the issue, confirm");
+
+            //Delete issues in database
+            var url = 'http://localhost:3000/issues/' + r;
+
+            let xhr = new XMLHttpRequest();
+
+            xhr.open('DELETE', url, false);
+            xhr.onload = function () {
+               
+                getIssues();
+                
+            }
+            xhr.send();
+
+          
+        }
+
+
+    </script>
+    <script src="./src/add.js"></script>
+    
+    </head>
+    <body>
+        <noscript>
+            <p>Your browser doesn't support Javascript. Please enable for optimal view.</p>
+        </noscript>
+        <h1 id="top"><b>Issue List</b></h1>
+            
+        <hr>
+        <br>
+
+        <input type="checkbox" id="chop" onchange="showOpen();"/>Open issues only<br>
+        <div id="IssueList"></div>
+        <button onclick="logout()" style="float: left;">Log out</button>
+        <form action="add.html">
+            <button type="submit" style="float:left;">Add issue</button>
+        </form>
+        
+        
+
+        
+    
+    
+    <script>
+
+    // when page loads, load those issues
+     window.addEventListener('DOMContentLoaded', function () {
+         getIssues();
+     });
+
+     // getIssues - simple fetch from the end point getting current issues state
+     function getIssues() {
+
+       // change to fetch API if you are so inclined
+       let xhr = new XMLHttpRequest();
+       xhr.open('GET', 'http://localhost:3000/issues/', true);
+       xhr.onload = function () {
+         renderIssues(this.responseText);
+       }
+       xhr.send();
+     }
+
+      function showOpen(){
+            var open = document.getElementById("chop");
+            
+            if(open.checked){
+            
+                tooglepart(true);
+            }else{
+                
+               tooglepart(false);
+            }
+            
+        
+            }
+        
+          function tooglepart(on){
+              var lst=document.getElementsByClassName("Closed");
+            for (var i=0;i<lst.length;++i){
+                lst[i].style.display=on?'none':'';
+              
+          }  
+    }
+
+    function redirect(url){
+        window.open(url);
+    }
+
+    // renderIssues - render the passed issues using template literals as opposed to template tags to show possibilities
+    // approach deeply buries in the markup though!
+    function renderIssues(issues) {
+
+       issues = JSON.parse(issues);
+
+       let output = `<table>
+                      <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                      </tr>` 
+        + (issues.map(issue => `<tr class="${issue.status}" data-id="${issue.id}" data-issue='`+JSON.stringify(issue)+`'>
+          <td>${issue.id}</td>
+          <td onclick=redirect("issue.html?issueid=${issue.id}") style="color: blue;")><u>${issue.title}</u></td>
+          <td>${issue.type}</td>
+          <td>${issue.description}</td>
+          <td>${issue.status}</td>
+         
+          <td><button onclick="deleteIssue(${issue.id})">Delete</button>
+          <td><button onclick="editIssue()">Edit</button>
+        </tr>`
+       )).join('');
+     
+       document.querySelector("#IssueList").innerHTML = output;
+     }
+
+
+     function editIssue(){
+         window.location="edit_STEP3.html";
+     }
+    
+    </script>       
+                
+             </table>
+             </div>
+             <p id="bottom"><a  href="#top">go to top</a></p>
+         <footer>
+             <hr>
+             Copyright: &copy; Group Neko
+             <address>
+             9600 Gilman Drive<br> 
+             La Jolla, CA 92093<br>
+             </address>
+             </footer>
+         </body>
+     
+     </html>
+     
