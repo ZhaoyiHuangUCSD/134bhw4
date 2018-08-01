@@ -34,7 +34,7 @@ function httpPut(){
 var url = 'http://localhost:3000/issues/' + document.getElementById('issueid').value;
 
 var xhr=new XMLHttpRequest();
-xhr.open("PUT",url,true);
+xhr.open("PATCH",url,true);
 
 var type = document.getElementById('issuetype');
 var typename = type.options[type.selectedIndex].value;
