@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" media="only screen and (max-width: 800px)" href="./src/mobile.css" type="text/css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+<title>Editing Page </title>
+    <style>
+        input[type="text"]{
+            border:1px solid grey;
+            width:200px;
+            height:100px;
+        }
+        body{
+            font-family: 'PT Serif', serif;
+        }
+        
+    </style>
+ 
+
+<!--Script for json-server -->
+
+<script>
+function httpPut(){
+var url = 'http://localhost:3000/issues/' + document.getElementById('issueid').value;
+
+var xhr=new XMLHttpRequest();
+xhr.open("PUT",url,true);
+
+var type = document.getElementById('issuetype');
+var typename = type.options[type.selectedIndex].value;
+
+var status = document.getElementById('issuestatus');
+var statusvalue = status.options[status.selectedIndex].value;
+
+    var data = {
+        "id": "",
+        "title": document.getElementById('issuename').value,
+        "type": typename,
+        "status": statusvalue,
+        "description": document.getElementById('issuedescription').value
+    }
+
+
+xhr.setRequestHeader('Content-Type', 'application/json');
+
+xhr.send(JSON.stringify(data));
+
+
+
+
+}
+    
+</script>
+
+    
+</head>
+<body>
+
+
+<h1>Edit Issue</h1>
+    <form id="myform" method="POST" >
+        <b>Issue ID</b><br>
+        <textarea id="issueid" rows="2" cols="30"></textarea><br>
+        <b>Issue Title</b><br>
+        <textarea id="issuename" rows="10" cols="30"></textarea><br>
+        <b>Issue Type</b><br>
+        <select id="issuetype">
+            <option value="Error">Error</option>
+            <option value="Warning">Warning</option>
+        </select><br>
+        <b>Issue Status</b><br>
+        <select id="issuestatus">
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+        </select><br>
+        <b>Issue Description</b><br>
+        <textarea id="issuedescription" rows="10" cols="30"></textarea><br>
+        <!--Unnecessary function for local database part-->
+        <!--//
+        <b>Issue Priority</b><br>
+        <div class="slidecontainer"><input type="range" min="1" max="3" value="2" class="slider" id="issuepriority" ></div><br>
+            <b>Issue Attachment</b><br>
+            <input type="file" id="issuefile"><br>
+            <p>&nbsp;</p>
+        //-->
+            <button type="button" onclick="httpPut()">Submit</button>
+            <button type="reset">Reset</button>
+    </form>
+
+
+
+</body>
+</html>
