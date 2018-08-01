@@ -56,7 +56,7 @@
 </script>   
     
     <script>
-        
+        /*
         function redirect(){
             
     firebase.auth().onAuthStateChanged(function(user) {
@@ -68,7 +68,7 @@
 })
            
         }
-        
+        */
        function logout(){
 
 var user = firebase.auth().currentUser;
@@ -192,7 +192,7 @@ firebase.auth().signOut().then(function() {
         <hr>
         <input type="checkbox" id="chop" onchange="showOpen();"/>Open issues only<br>
         
-        <script>redirect();</script>
+        
         
         <button onclick="logout()" style="float: right">Log out</button>
        
