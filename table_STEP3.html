@@ -77,7 +77,9 @@
 
         <input type="checkbox" id="chop" onchange="showOpen();"/>Open issues only<br>
         <div id="IssueList"></div>
+        <!--
         <button onclick="logout()" style="float: left;">Log out</button>
+        -->
         <form action="add.html">
             <button type="submit" style="float:left;">Add issue</button>
         </form>
@@ -150,7 +152,7 @@
                       </tr>` 
         + (issues.map(issue => `<tr class="${issue.status}" data-id="${issue.id}" data-issue='`+JSON.stringify(issue)+`'>
           <td>${issue.id}</td>
-          <td onclick=redirect("issue.html?issueid=${issue.id}") style="color: blue;")><u>${issue.title}</u></td>
+          <td onclick=redirect("issue_STEP3.html?issueid=${issue.id}") style="color: blue;")><u>${issue.title}</u></td>
           <td>${issue.type}</td>
           <td>${issue.description}</td>
           <td>${issue.status}</td>
