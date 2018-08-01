@@ -1,16 +1,22 @@
 console.log('Hello from sw.js');
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js');
 
+
+
+
 if (workbox) {
   console.log(`Yay! Workbox is loaded 🎉`);
 } else {
   console.log(`Boo! Workbox didn't load 😬`);
 }
 
-
+/*precache index, offline, and issue table page*/
 workbox.precaching.precacheAndRoute([
     '/index.html',
-    '/'
+    '/',
+    'offline.html',
+    'issue-table.html'
+    
     
 ]);
 
@@ -45,12 +51,13 @@ workbox.precaching.precacheAndRoute([
   }),
 ); 
 
-//workbox.setConfig({debug:true});
-//workbox.core.setLogLevel(workbox.core.LOG_LEVELS.debug);
 console.log("GG");
 
-workbox.routing.registerRoute(
-    /.*\.html/,
-    workbox.strategies.networkFirst(),
-    'GET'
-);
+/*add offline page*/
+self.addEventListener('fetch',event=>{
+    event.respondWith(
+    caches.match(event.request).then(response=>response||fetch(event.request)).catch(()=>{
+        if(event.request.mode=='navigate'){return caches.match('/offline.html');}
+    })
+    );
+});
