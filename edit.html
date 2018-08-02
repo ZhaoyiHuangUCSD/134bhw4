@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!--
+   
     <link rel="stylesheet" media="only screen and (max-width: 800px)" href="./src/mobile.css" type="text/css" />
--->
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -90,7 +90,7 @@ function inputThings1(){
          });
     }
      
-    if(document.getElementById("issuename").value!=0){
+    if(document.getElementById("issuestatus").value!=0){
     firebase.database().ref("issues/"+iid).update({
            issuestatus:document.getElementById("issuestatus").value
          });
