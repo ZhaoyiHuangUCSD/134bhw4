@@ -7,6 +7,8 @@
      <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FFFFFF">
+    <link rel="manifest" href="/manifest.json">
     <title>Issue Table</title>
     <style>
         body{
@@ -41,7 +43,20 @@
 
 
     
-    <script>  
+    <script> 
+        if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+        
+        
         function deleteIssue(r){
             var x=confirm("If you want to delete the issue, confirm");
             if(x){
@@ -77,6 +92,7 @@
         <form action="add.html">
             <button type="submit" style="float:left;">Add issue</button>
         </form>
+        <br>
         
         
 
@@ -155,8 +171,7 @@
     
     </script>       
                 
-             </table>
-             </div>
+             
              <p id="bottom"><a  href="#top">go to top</a></p>
          <footer>
              <hr>
