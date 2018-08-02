@@ -15,7 +15,8 @@ workbox.precaching.precacheAndRoute([
     '/index.html',
     '/',
     'offline.html',
-    'issue-table.html'
+    'issue-table.html',
+    'table_STEP3.html'
     
     
 ]);
