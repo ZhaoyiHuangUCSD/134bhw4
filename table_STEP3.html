@@ -113,7 +113,7 @@
             }
         
           function tooglepart(on){
-              var lst=document.getElementsByClassName("Closed");
+              var lst=document.getElementsByClassName("close");
             for (var i=0;i<lst.length;++i){
                 lst[i].style.display=on?'none':'';
               
@@ -141,14 +141,16 @@
           <td>${issue.status}</td>
          
           <td><button onclick="deleteIssue(${issue.id})">Delete</button>
-          <td><button onclick="editIssue()">Edit</button>
+          <td><button onclick="editIssue(${issue.id})">Edit</button>
         </tr>`
        )).join('');
      
        document.querySelector("#IssueList").innerHTML = output;
      }
-     function editIssue(){
-         window.location="edit_STEP3.html";
+     function editIssue(childKey){
+            var temp='';
+            temp="edit_STEP3.html"+'?issueid='+String(childKey);
+            window.location=temp;
      }
     
     </script>       

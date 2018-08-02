@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" media="only screen and (max-width: 800px)" href="./src/mobile.css" type="text/css" />
     <meta charset="utf-8">
-    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
 <title>Editing Page </title>
     <style>
@@ -23,7 +22,6 @@
 <!--Script for json-server -->
 
 <script>
-
  function getParam(){
                 
         let params = (new URL(document.location)).searchParams;
@@ -31,61 +29,29 @@
         return id;
     }   
 function httpPut(){
-var url = 'http://localhost:3000/issues/' + document.getElementById('issueid').value;
-
+var data={};
+var url = 'http://localhost:3000/issues/' + String(getParam());
 var xhr=new XMLHttpRequest();
 xhr.open("PATCH",url,true);
-
-var type = document.getElementById('issuetype');
-var typename = type.options[type.selectedIndex].value;
-
-var status = document.getElementById('issuestatus');
-var statusvalue = status.options[status.selectedIndex].value;
-
-if(document.getElementById('issuename').value == ""&&
-document.getElementById('issuedescription').value != ""){
-    var data = {
-        "id": "",
-        "type": typename,
-        "status": statusvalue,
-        "description": document.getElementById('issuedescription').value
-    }
+var issuetype=document.getElementById("issuetype").value;
+var issuestatus = document.getElementById('issuestatus').value;
+if(document.getElementById("issuedescription").value!=""){
+    
+        data["description"]= document.getElementById('issuedescription').value
 }
-else if(document.getElementById('issuedescription').value == "" &&
-document.getElementById('issuename').value != ""){
-    var data = {
-        "id": "",
-        "title": document.getElementById('issuename').value,
-        "type": typename,
-        "status": statusvalue
-    }
+    
+if(document.getElementById("issuename").value!=""){
+    data["title"]=document.getElementById('issuename').value
 }
-else if(document.getElementById('issuedescription').value == "" &&
-document.getElementById('issuename').value == ""){
-    var data = {
-        "id": "",
-        "type": typename,
-        "status": statusvalue
-    }
-}
-else{
-    var data = {
-        "id": "",
-        "title": document.getElementById('issuename').value,
-        "type": typename,
-        "status": statusvalue,
-        "description": document.getElementById('issuedescription').value
-    }
-}
-
+ if(document.getElementById("issuetype").value!=0){
+     data["type"]=document.getElementById('issuetype').value
+ }
+  if(document.getElementById("issuestatus").value!=0){
+     data["status"]=document.getElementById('issuestatus').value
+ }   
 
 xhr.setRequestHeader('Content-Type', 'application/json');
-
 xhr.send(JSON.stringify(data));
-
-
-
-
 }
     
 </script>
@@ -97,19 +63,19 @@ xhr.send(JSON.stringify(data));
 
 <h1>Edit Issue</h1>
     <form id="myform" method="POST" >
-        <b>Issue ID</b><br>
-        <textarea id="issueid" rows="2" cols="30"></textarea><br>
         <b>Issue Title</b><br>
         <textarea id="issuename" rows="10" cols="30"></textarea><br>
         <b>Issue Type</b><br>
         <select id="issuetype">
+            <option value=0>N/A</option>
             <option value="Error">Error</option>
             <option value="Warning">Warning</option>
         </select><br>
         <b>Issue Status</b><br>
         <select id="issuestatus">
-                <option value="Open">Open</option>
-                <option value="Closed">Closed</option>
+                <option value=0>N/A</option>
+                <option value="open">Open</option>
+                <option value="close">Closed</option>
         </select><br>
         <b>Issue Description</b><br>
         <textarea id="issuedescription" rows="10" cols="30"></textarea><br>
