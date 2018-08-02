@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="./src/mobile.css" type="text/css" media="only screen and (max-width: 800px)"/>
      <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
     <title>Issue Table</title>
     <style>
         body{
@@ -113,7 +113,7 @@
             }
         
           function tooglepart(on){
-              var lst=document.getElementsByClassName("close");
+              var lst=document.getElementsByClassName("Closed");
             for (var i=0;i<lst.length;++i){
                 lst[i].style.display=on?'none':'';
               
@@ -141,22 +141,19 @@
           <td>${issue.status}</td>
          
           <td><button onclick="deleteIssue(${issue.id})">Delete</button>
-          <td><button onclick="editIssue(${issue.id})">Edit</button>
+          <td><button onclick="editIssue()">Edit</button>
         </tr>`
        )).join('');
      
        document.querySelector("#IssueList").innerHTML = output;
      }
-     function editIssue(childKey){
-            var temp='';
-            temp="edit_STEP3.html"+'?issueid='+String(childKey);
-            window.location=temp;
+     function editIssue(){
+         window.location="edit_STEP3.html";
      }
     
     </script>       
                 
-             </table>
-             </div>
+
              <p id="bottom"><a  href="#top">go to top</a></p>
          <footer>
              <hr>

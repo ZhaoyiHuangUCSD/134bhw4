@@ -1,23 +1,29 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
     <title>Issue page</title>
     <style>
         body{
-            background-color: slategrey;
+            background-color: blanchedalmond;
             font-family: Georgia, serif;
+        }
+        #mode{
+            text-align: right;
         }
     </style>
 
     
     </head>
-<body>
+<body id="body">
     
     
     <div>
     <h1>Issue Detail:</h1>
+    <div id="mode">
+    <input type="checkbox" id="chop" onchange="nightmode();"/>Night Mode<br>
+    </div>
         <hr>
     </div>
     <h2> Issue Name:</h2>
@@ -25,12 +31,14 @@
     <h2> Issue Type:</h2>  
     <div id="issuetype"></div>
     <h2> Issue Description:</h2>
-    <p id="issuedes"></p>
+    <p></p>
     <div id="issuedes"></div>
     <h2>Issue status:</h2>
     <div id="issuestatus"></div><br>
 
-    <button type="submit" onclick="window.location='table_STEP3.html'">Back</button>
+    <button type="submit" onclick="window.location='table_STEP3.html'"
+        style="float:right;">Back to issue list</button>
+        <br>
     
 
     <script>
@@ -64,6 +72,20 @@
    }
       
      }
+
+
+     function nightmode(){
+        var b = document.getElementById('body');
+        var open = document.getElementById("chop");
+            
+            if(open.checked){
+    
+                b.style.backgroundColor = "slategrey";
+            }
+            else{
+                b.style.backgroundColor = "blanchedalmond";
+            }
+        }
             
                  
                     

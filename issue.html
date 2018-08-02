@@ -2,20 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <!--
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
+-->
     <link rel="stylesheet" media="only screen and (max-width: 800px)" href="./src/mobile.css" type="text/css" />
     
     <title>Issue page</title>
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
     <style>
-        body{
-        
+        body_night{
+            background-color: slategrey;
             font-family: Georgia, serif;
         }
+        body{
+            background-color: blanchedalmond;
+            font-family: Georgia, serif;
+        }
+        #mode{
+            text-align: right;
+        }
     </style>
-<script>
+<script >
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyDylU22y4KBSC7NtdPcurxMu-1uJid67i0",
@@ -107,13 +115,31 @@ var tdUsers = document.getElementById("issuestatus");
         });
     });  
     }
+
+
+
+    function nightmode(){
+        var b = document.getElementById('body');
+        var open = document.getElementById("chop");
+            
+            if(open.checked){
+    
+                b.style.backgroundColor = "slategrey";
+            }
+            else{
+                b.style.backgroundColor = "blanchedalmond";
+            }
+        }
     
 </script>
     
     </head>
-<body>
+<body id="body">
     <div>
     <h1>Issue Detail:</h1>
+        <div id="mode">
+            <input type="checkbox" id="chop" onchange="nightmode();"/>Night Mode<br>
+        </div>
         <button onclick="logout()" style="float: right">Log out</button>
         <br>
         <hr>
