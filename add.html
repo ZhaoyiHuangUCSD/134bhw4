@@ -123,7 +123,7 @@ function inputThings(val){
         <b>Issue Priority</b><br>
         <div class="slidecontainer"><input type="range" min="1" max="3" value="2" class="slider" id="issuepriority" ></div><br>
             <b>Issue Attachment</b><br>
-            <input type="file" id="files" accept="image/*"  onchange="previewFile()" id="files" name="files[]" multiple /><br>
+            <input type="file" id="files" accept="image/*"  onchange="previewFile()" name="files[]" multiple /><br>
             <p>&nbsp;</p>
             <button type="button" onclick="inputThings(0);window.location='issue-table.html'">Submit to firebase</button>
             <button type="button" onclick="inputThings(1);window.location='table_STEP3.html'">Submit to local storage</button>
