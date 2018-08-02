@@ -103,7 +103,7 @@ function inputThings(val){
 
 <h1>Add Issue</h1>
     <form id="myform" method="post">
-    <b>Issue Title</b><br>
+    <b>Issue Name</b><br>
         <textarea id="issuename" rows="10" cols="30" required></textarea><br>
         <b>Issue Type</b><br>
         <select id="issuetype">
@@ -116,8 +116,8 @@ function inputThings(val){
         <div class="slidecontainer"><input type="range" min="1" max="3" value="2" class="slider" id="issuepriority" ></div><br>
             <b>Issue Attachment</b><br>
             <input type="file" id="files" accept="image/*"  onchange="previewFile()" name="files[]" multiple /><br>
-            <p>&nbsp;</p>
-            <button type="button" onclick="inputThings(0);window.open('issue-table.html')">Submit to firebase</button>
+            <p>&nbsp; Note: Please use back button when you submit to firebase to go back to issue list</p>
+            <button type="button" onclick="inputThings(0)">Submit to firebase</button>
             <button type="button" onclick="inputThings(1);window.location='table_STEP3.html'">Submit to local storage</button>
             <button type="reset">Reset</button>
     </form>
