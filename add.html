@@ -94,7 +94,17 @@ function inputThings(val){
     }
     
 }
-        
+   if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}     
     </script>
     
     
@@ -120,5 +130,6 @@ function inputThings(val){
             <button type="button" onclick="inputThings(0)">Submit to firebase</button>
             <button type="button" onclick="inputThings(1);window.location='table_STEP3.html'">Submit to local storage</button>
             <button type="reset">Reset</button>
+            <button onclick="window.open('issue-table.html')">Back</button>
     </form>
 </body>
