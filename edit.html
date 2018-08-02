@@ -37,21 +37,36 @@
     
     
     <script>
-        
-function getParam() {
+
+//check if in or not in firebase
+function checkParam(){
     let params = (new URL(document.location)).searchParams;
-    let name = params.get("id");
-    return name;
+    return params.has("issueid");
+}       
+
+
+function getParam() {
+    let name="";
+    let params = (new URL(document.location)).searchParams;
+    if(!checkParam()){
+        name=''+params.get("id");
+        
+    }else{ name=''+params.get("issueid");}
+    return name
+    
 };       
         
-  var iid=String(getParam());
-
+  
+var iid=String(getParam());
+        
 function getIname(){
+if(!checkParam()){
 var taUsers = document.getElementById("top"); 
  firebase.database().ref('issues').child(iid).once('value').then( function(snap) {
     var user=String(snap.val().issuename);
     taUsers.append(document.createTextNode(user));
     });
+}
 }        
 
 
@@ -74,46 +89,82 @@ function previewFile(){
         
      
 
-        
+/*abstraction layer of storage*/       
 function inputThings1(){
-    
+    var data={};
     if(document.getElementById("issuedescription").value!=""){
-    
+    if(!checkParam()){
     firebase.database().ref("issues/"+iid).update({
            issuedescriptions:document.getElementById("issuedescription").value
          });
+    }else{
+        data["description"]= document.getElementById('issuedescription').value
+    }
     }
      if(document.getElementById("issuepriority").value!=0){
-    
+    if(!checkParam()){
     firebase.database().ref("issues/"+iid).update({
            issuepriority:document.getElementById("issuepriority").value
          });
     }
+    }
      
     if(document.getElementById("issuestatus").value!=0){
+    if(!checkParam()){
     firebase.database().ref("issues/"+iid).update({
            issuestatus:document.getElementById("issuestatus").value
          });
+    }else{
+             data["status"]=document.getElementById('issuestatus').value
+    }
      }
  
     
     if(document.getElementById("issuename").value!=""){
-    
+    if(!checkParam()){
     firebase.database().ref("issues/"+iid).update({
            issuename:document.getElementById("issuename").value
          });
+    }else{
+        data["title"]=document.getElementById('issuename').value
+    }
     }
     
-    if(fileurl!=""){
+    if(fileurl!="" && !checkParam()){
             firebase.database().ref("issues/"+iid).update({
            issuefile:fileurl
          });
     }
 
+    if(document.getElementById("issuetype").value!=0){
+    if(!checkParam()){
+    firebase.database().ref("issues/"+iid).update({
+           issuetype:document.getElementById("issuetype").value
+         });
+    }else{
+             data["type"]=document.getElementById('issuetype').value
+    }
+     }
     
+    if(checkParam()){
+        var url = 'http://localhost:3000/issues/' +String(getParam());
+        var xhr=new XMLHttpRequest();
+        xhr.open("PATCH",url,true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(data));
+    }
     
 }
         
+//function to go back to issuelist
+function goBack(){
+    if(!checkParam()){
+        window.location="issue-table.html"
+    }else{
+        window.location="table_STEP3.html"
+    }
+    
+}        
 
     </script>  
     
@@ -129,28 +180,35 @@ function inputThings1(){
 
 <h1>Edit Issue</h1>
     <h2 id="top">You are changing issue: &nbsp; <script>getIname()</script></h2>
-    <h6>Please provide change for the fields or we will assume nothing change</h6>
+    <h5>Please provide change for the fields or we will assume nothing change</h5>
     <br>
     <form method="post">
         <b>Issue Name</b><br>
          <textarea id="issuename" rows="10" cols="30"></textarea><br>
+        <b>Change Issue Type</b><br>
+        <select id="issuetype">
+            <option value=0>N/A</option>
+            <option value="Error">Error</option>
+            <option value="Warning">Warning</option>
+        </select><br>
         <b>Change issue status</b><br>
         <select id="issuestatus">
             <option value=0>N/A</option>
             <option value="open">open</option>
             <option value="close">close</option>
-            
         </select><br>
+        
         <br>
         <b>change for issue description</b><br>
         <textarea id="issuedescription" rows="10" cols="30" placeholder="please provide alternative description"></textarea><br>
         <b>Change issue priority</b><br>
         <div class="slidecontainer"><input type="range" min="1" max="3" value="0" class="slider" id="issuepriority"></div><br>
             <b>Update Issue Attachment</b><br>
-            <input type="file" id="files" onchange="previewFile()" id="files" name="files[]" multiple /><br>
+            <input type="file" id="files" onchange="previewFile()"  name="files[]" multiple /><br>
             <p>&nbsp;</p>
-            <button type="button" onclick="inputThings1(); window.location='issue-table.html'" >Submit</button>
+            <button type="button" onclick="inputThings1(); goBack()" >Submit</button>
             <button type="reset">Reset</button>
+            <button type="button" onclick="goBack()" style="float:right">Back</button>
     </form>
 </body>
 </html>
