@@ -6,7 +6,6 @@
     <!--
     <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
 -->
-    <link rel="stylesheet" media="only screen and (max-width: 800px)" href="./src/mobile.css" type="text/css" />
     
     <title>Issue page</title>
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
@@ -42,7 +41,6 @@ function getParam(){
 }
   
        function logout(){
-
 var user = firebase.auth().currentUser;
 if(user){
 window.location="./index.html";
@@ -74,7 +72,6 @@ var tbUsers = document.getElementById("issuetype");
     tbUsers.append(document.createTextNode(user));
     });
     } 
-
     function getDes(){
 var tlUsers = document.getElementById("issuedes"); 
  firebase.database().ref('issues').child(issueName).once('value').then( function(snap) {
@@ -104,20 +101,14 @@ var tdUsers = document.getElementById("issuestatus");
       firebase.database().ref('issues').child(issueName).once('value').then( function(snap) {
     var user=String(snap.val().issuefile);
         storage.child(user).getDownloadURL().then(function(url) {
-
-
   var test = url;
 //  add this line here:
   document.getElementById("issuefile").src = test;
-
 }).catch(function(error){
        console.log("no file uploaded");     
         });
     });  
     }
-
-
-
     function nightmode(){
         var b = document.getElementById('body');
         var open = document.getElementById("chop");
