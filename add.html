@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +15,6 @@
         }
         body{
             font-family: Georgia, serif;
-
         }
         
     </style>
@@ -53,28 +51,23 @@ const ONJSON=1;
     issuefile:fileurl
   });
 } 
-
 var fileurl="";        
 function previewFile(){
   fileurl=document.getElementById('files').value.split(/(\\|\/)/g).pop();
   var storage = firebase.storage();
-
   var file = document.getElementById("files").files[0];
   
   var storageRef = firebase.storage().ref();
   
   //dynamically set reference to the file name
   var thisRef = storageRef.child(file.name);
-
   thisRef.put(file).then(function(snapshot) {
    console.log('Uploaded a blob or file!');
 });
   
-
   }        
         
      
-
 /*building abstract storage function to add*/        
 function inputThings(val){
     
@@ -102,7 +95,6 @@ function inputThings(val){
     
 }
         
-
     </script>
     
     
@@ -125,9 +117,8 @@ function inputThings(val){
             <b>Issue Attachment</b><br>
             <input type="file" id="files" accept="image/*"  onchange="previewFile()" name="files[]" multiple /><br>
             <p>&nbsp;</p>
-            <button type="button" onclick="inputThings(0);window.location='issue-table.html'">Submit to firebase</button>
+            <button type="button" onclick="inputThings(0);window.open('issue-table.html')">Submit to firebase</button>
             <button type="button" onclick="inputThings(1);window.location='table_STEP3.html'">Submit to local storage</button>
             <button type="reset">Reset</button>
     </form>
 </body>
-</html>
