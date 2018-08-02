@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FFFFFF">
+    <link rel="manifest" href="/manifest.json">
     <title>Issue page</title>
     <style>
         body{
@@ -13,8 +15,19 @@
             text-align: right;
         }
     </style>
-
-    
+<script>
+    if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+    </script>
     </head>
 <body id="body">
     
@@ -45,14 +58,12 @@
     window.addEventListener('DOMContentLoaded', function () {
          getIssues();
      });
-
       function getParam(){
                 
             let params = (new URL(document.location)).searchParams;
             let id = params.get("issueid");
             return id;
         }
-
      // getIssues - simple fetch from the end point getting current issues state
      function getIssues() {
         var issueId=getParam(); 
@@ -61,7 +72,6 @@
        var xhr=new XMLHttpRequest();
         xhr.open("GET",url,false);
         xhr.send();
-
     if (xhr) {
       var text = JSON.parse(xhr.responseText) ;
       document.getElementById("issuename").innerText = text.title;
@@ -72,8 +82,6 @@
    }
       
      }
-
-
      function nightmode(){
         var b = document.getElementById('body');
         var open = document.getElementById("chop");

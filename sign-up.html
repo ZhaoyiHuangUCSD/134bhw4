@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FFFFFF">
     <link rel="stylesheet" media="only screen and (max-width: 800px)" href="./src/mobile.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" media="only screen and (max-width: 800px)" href="./src/mobile.css" type="text/css" />
+    <link rel="manifest" href="/manifest.json">
     <title>Sign-up Page</title>
     <style>
        body {font-family:'PT Serif', serif; }
@@ -57,6 +58,18 @@
     
     
     <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+        
  function handleSignUp() {
       var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
